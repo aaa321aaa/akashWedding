@@ -18,7 +18,7 @@ const PHRASES = [
   [['S\'', 1], ['D', 1], ['P', 1], ['G', 1], ['R', 2], ['G', 1], ['P', 1], ['G', 2], ['R', 1], ['S', 1], ['.D', 2], ['S', 4]],
   [['G', 2], ['P', 1], ['D', 1], ['S\'', 2], ['R\'', 1], ['S\'', 1], ['D', 2], ['P', 2], ['G', 1], ['R', 1], ['S', 4]]
 ];
-const BEAT = 0.42;
+const BEAT = 0.62;   // ধীর লয় — কোমল আবহ
 
 class SynthMusic {
   constructor() {
@@ -44,9 +44,9 @@ class SynthMusic {
     }
     this.reverb = ctx.createConvolver();
     this.reverb.buffer = ir;
-    const wet = ctx.createGain(); wet.gain.value = 0.42;
+    const wet = ctx.createGain(); wet.gain.value = 0.55;
     this.reverb.connect(wet).connect(this.master);
-    this.dry = ctx.createGain(); this.dry.gain.value = 0.75;
+    this.dry = ctx.createGain(); this.dry.gain.value = 0.6;
     this.dry.connect(this.master);
     this.bus = ctx.createGain();
     this.bus.connect(this.dry); this.bus.connect(this.reverb);
@@ -66,12 +66,12 @@ class SynthMusic {
     o.frequency.value = freq; o2.frequency.value = freq * 2.003;
     const f = ctx.createBiquadFilter();
     f.type = 'lowpass'; f.Q.value = 6;
-    f.frequency.setValueAtTime(2400, t);
-    f.frequency.exponentialRampToValueAtTime(500, t + 2.2);
+    f.frequency.setValueAtTime(1300, t);
+    f.frequency.exponentialRampToValueAtTime(380, t + 2.4);
     const g = ctx.createGain();
     g.gain.setValueAtTime(0, t);
-    g.gain.linearRampToValueAtTime(0.07, t + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.0008, t + 2.8);
+    g.gain.linearRampToValueAtTime(0.032, t + 0.04);
+    g.gain.exponentialRampToValueAtTime(0.0006, t + 3.0);
     o.connect(f); o2.connect(f); f.connect(g).connect(this.bus);
     o.start(t); o2.start(t); o.stop(t + 3); o2.stop(t + 3);
   }
@@ -80,11 +80,11 @@ class SynthMusic {
   _note(freq, t, dur, prevFreq) {
     const ctx = this.ctx;
     const o = ctx.createOscillator();
-    o.type = 'sawtooth';
+    o.type = 'triangle';
     const o2 = ctx.createOscillator();
     o2.type = 'sine';
     const vib = ctx.createOscillator(), vibG = ctx.createGain();
-    vib.frequency.value = 5.2; vibG.gain.value = freq * 0.006;
+    vib.frequency.value = 4.6; vibG.gain.value = freq * 0.004;
     vib.connect(vibG); vibG.connect(o.frequency); vibG.connect(o2.frequency);
     if (prevFreq) {
       o.frequency.setValueAtTime(prevFreq, t);
@@ -93,14 +93,14 @@ class SynthMusic {
       o2.frequency.exponentialRampToValueAtTime(freq * 2, t + 0.12);
     } else { o.frequency.value = freq; o2.frequency.value = freq * 2; }
     const bp = ctx.createBiquadFilter();
-    bp.type = 'bandpass'; bp.frequency.value = freq * 3; bp.Q.value = 1.4;
+    bp.type = 'lowpass'; bp.frequency.value = freq * 4; bp.Q.value = 0.5;
     const lp = ctx.createBiquadFilter();
-    lp.type = 'lowpass'; lp.frequency.value = 2600;
+    lp.type = 'lowpass'; lp.frequency.value = 1700;
     const g = ctx.createGain();
-    const g2 = ctx.createGain(); g2.gain.value = 0.35;
+    const g2 = ctx.createGain(); g2.gain.value = 0.25;
     g.gain.setValueAtTime(0, t);
-    g.gain.linearRampToValueAtTime(0.06, t + 0.08);
-    g.gain.setValueAtTime(0.055, t + dur * 0.7);
+    g.gain.linearRampToValueAtTime(0.045, t + 0.22);
+    g.gain.setValueAtTime(0.04, t + dur * 0.7);
     g.gain.exponentialRampToValueAtTime(0.0008, t + dur + 0.25);
     o.connect(bp).connect(lp).connect(g);
     o2.connect(g2).connect(g);
@@ -118,7 +118,7 @@ class SynthMusic {
       o.type = 'sine'; o.frequency.value = SA * 4 * m;
       const g = ctx.createGain();
       g.gain.setValueAtTime(0, t);
-      g.gain.linearRampToValueAtTime(0.025 / (i + 1), t + 0.005);
+      g.gain.linearRampToValueAtTime(0.01 / (i + 1), t + 0.005);
       g.gain.exponentialRampToValueAtTime(0.0001, t + 2.5 / (i + 1));
       o.connect(g).connect(this.bus);
       o.start(t); o.stop(t + 2.6);
@@ -163,7 +163,7 @@ class SynthMusic {
     if (this.nextNote < t) { this.nextNote = t + 0.4; this.nextDrone = t + 0.1; this.nextBell = t + 1; }
     this.master.gain.cancelScheduledValues(t);
     this.master.gain.setValueAtTime(this.master.gain.value, t);
-    this.master.gain.linearRampToValueAtTime(0.9, t + 1.5);
+    this.master.gain.linearRampToValueAtTime(0.75, t + 4);
     clearInterval(this.timer);
     this.timer = setInterval(() => this._schedule(), 60);
     this.playing = true;
@@ -190,7 +190,7 @@ class FileMusic {
   async play() {
     await this.audio.play();
     this.playing = true;
-    this._fade(0.75);
+    this._fade(0.45);
   }
   pause() {
     this.playing = false;
@@ -229,26 +229,36 @@ export function initMusic() {
     btn.setAttribute('aria-label', on ? 'সুর বন্ধ করুন' : 'সানাইয়ের সুর চালু করুন');
     btn.title = on ? 'সুর বন্ধ করুন' : 'সানাইয়ের সুর';
   };
-  btn.addEventListener('click', async () => {
-    if (busy) return;
+  // ফাইল-যাচাই আগেভাগে — যাতে ক্লিকের মুহূর্তেই বাজানো যায়
+  let useFile = false;
+  fileExists(AUDIO_FILE).then(ok => { useFile = ok; });
+  const start = async () => {
+    if (busy || (player && player.playing)) return;
     busy = true;
     try {
-      if (!player) player = (await fileExists(AUDIO_FILE)) ? new FileMusic(AUDIO_FILE) : new SynthMusic();
-      if (player.playing) { player.pause(); setUI(false); }
-      else {
-        try { await player.play(); }
-        catch (e) {
-          // ফাইল বাজাতে না পারলে সংশ্লেষিত সুরে ফিরে যাওয়া
-          player = new SynthMusic();
-          await player.play();
-        }
-        setUI(true);
+      if (!player) player = useFile ? new FileMusic(AUDIO_FILE) : new SynthMusic();
+      try { await player.play(); }
+      catch (e) {
+        // ফাইল বাজাতে না পারলে সংশ্লেষিত সুরে ফিরে যাওয়া
+        player = new SynthMusic();
+        await player.play();
       }
+      setUI(true);
+    } catch (e) {
+      console.warn('সুর চালু করা যায়নি', e);
     } finally {
       busy = false;
     }
+  };
+  btn.addEventListener('click', () => {
+    if (player && player.playing) { player.pause(); setUI(false); }
+    else start();
   });
+  // ট্যাব লুকালে থামে, ফিরে এলে আবার বাজে
+  let resumeOnShow = false;
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden && player && player.playing) { player.pause(); setUI(false); }
+    if (document.hidden && player && player.playing) { player.pause(); setUI(false); resumeOnShow = true; }
+    else if (!document.hidden && resumeOnShow) { resumeOnShow = false; start(); }
   });
+  return { start };
 }

@@ -82,7 +82,7 @@ akash-anamika-wedding/
 
 ## Music
 
-- Nothing plays until the visitor taps the music button (bottom left).
+- Soft music starts when the visitor clicks **প্রবেশ করুন** (a user action, so browsers allow it). The music button (bottom left) turns it off or on again.
 - If `assets/audio/wedding-instrumental.mp3` exists, it plays on a loop with fade-in and fade-out.
 - Otherwise the site plays a soft instrumental generated in the browser with Web Audio: a tanpura-style drone, a shehnai/flute-style melody in a Bhupali-like pentatonic scale, and temple-bell accents. No audio file is needed for this.
 - To use your own track, add a royalty-free or licensed MP3 with exactly that filename.
@@ -112,7 +112,7 @@ Wedding details used (unchanged from the brief):
 - **বর:** আকাশ ঘোষ — পিতা: শ্রী মুকুল ঘোষ, মাতা: শ্রীমতী মমতা রাণী ঘোষ
 - **কনে:** অনামিকা ঘোষ — পিতা: শ্রী অজিত ঘোষ, মাতা: শ্রীমতী সঙ্গীতা রাণী ঘোষ
 - **গায়ে হলুদ:** ১২ ডিসেম্বর ২০২৬, শনিবার
-- **শুভ বিবাহ:** ১৩ ডিসেম্বর ২০২৬, রবিবার — সন্ধ্যা ৬:১৫ ঘটিকা হতে রাত ১২:২৬ ঘটিকা পর্যন্ত
-- **প্রীতিভোজ (বৌভাত):** ১৫ ডিসেম্বর ২০২৬, মঙ্গলবার
+- **শুভ বিবাহ:** ১৩ ডিসেম্বর ২০২৬, রবিবার — সন্ধ্যা ৫:১৪:৫০ গতে রাত্রি ১২:২৯:০৭ মধ্যে
+- **প্রীতিভোজ (বৌভাত):** ১৫ ডিসেম্বর ২০২৬, মঙ্গলবার — দুপুর ১ ঘটিকা
 
 No venue or address is included, because none was provided.

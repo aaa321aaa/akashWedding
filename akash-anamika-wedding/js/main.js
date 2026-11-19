@@ -76,7 +76,9 @@ function fallback() {
 async function boot() {
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
   window.scrollTo(0, 0);
-  initMusic();
+  const music = initMusic();
+  // অতিথি 'প্রবেশ করুন' চাপলেই কোমল সুর শুরু (ব্যবহারকারীর ক্লিকেই — স্বয়ংক্রিয় নয়)
+  document.getElementById('enter-btn').addEventListener('click', () => music.start(), { once: true });
   setProgress(5);
 
   try { await waitForGsap(); } catch (e) { console.error(e); }
