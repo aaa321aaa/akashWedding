@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="bn" class="is-locked">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#350814" />
+  <meta name="description" content="আকাশ ❤️ অনামিকা — শুভ বিবাহের নিমন্ত্রণ" />
+  <title>আকাশ ❤️ অনামিকা — শুভ বিবাহ</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23580D20' stroke='%23C6A15B' stroke-width='3'/%3E%3Cpath d='M32 14c6 8 7 18 0 30c-7-12-6-22 0-30z' fill='%23E8D5A3'/%3E%3Cpath d='M32 44c-4-10-12-16-20-17c1 10 9 16 20 17zM32 44c4-10 12-16 20-17c-1 10-9 16-20 17z' fill='%23C6A15B'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;500;600;700;800;900&family=Hind+Siliguri:wght@300;400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/typography.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <!-- ত্রিমাত্রিক জগৎ -->
+  <canvas id="world" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div id="flash" aria-hidden="true"></div>
+  <div id="sweep" aria-hidden="true"></div>
+
+  <!-- লোডার -->
+  <div id="loader" role="status" aria-live="polite">
+    <div class="loader-diya" aria-hidden="true">
+      <span class="loader-flame"></span>
+      <span class="loader-bowl"></span>
+    </div>
+    <p class="loader-text">শুভ আয়োজন প্রস্তুত হচ্ছে…</p>
+    <div class="loader-bar"><span id="loader-progress"></span></div>
+  </div>
+
+  <!-- দৃশ্য ১ : রাজপ্রাসাদের প্রবেশদ্বার -->
+  <section id="opening" class="opening" aria-label="প্রবেশদ্বার">
+    <div class="opening-inner">
+      <p class="ganesh" data-intro>🦋🦋ওঁ প্রজাপতয়ে নম:🦋🦋</p>
+      <span class="ornament-line" data-intro aria-hidden="true"></span>
+      <p class="opening-sub" data-intro>একটি শুভ মিলনের আমন্ত্রণ</p>
+      <h1 class="opening-names gold-text" data-intro>আকাশ <span class="heart">❤️</span> অনামিকা</h1>
+      <button id="enter-btn" class="royal-btn" data-intro type="button">
+        <span class="royal-btn-glow" aria-hidden="true"></span>
+        <span class="royal-btn-label">প্রবেশ করুন</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- পার্শ্ব-নেভিগেশন -->
+  <nav class="scene-nav" aria-label="দৃশ্য নির্বাচন">
+    <a href="#invitation" data-label="নিমন্ত্রণপত্র" aria-label="নিমন্ত্রণপত্র"></a>
+    <a href="#hero" data-label="শুভ বিবাহ" aria-label="শুভ বিবাহ"></a>
+    <a href="#family" data-label="দুই পরিবার" aria-label="দুই পরিবার"></a>
+    <a href="#story" data-label="নতুন অধ্যায়" aria-label="নতুন অধ্যায়"></a>
+    <a href="#schedule" data-label="অনুষ্ঠান সূচি" aria-label="অনুষ্ঠান সূচি"></a>
+    <a href="#finale" data-label="আশীর্বাদ" aria-label="আশীর্বাদ"></a>
+  </nav>
+
+  <!-- সংগীত -->
+  <button id="music-toggle" class="music-toggle" type="button" aria-pressed="false" aria-label="সানাইয়ের সুর চালু করুন" title="সানাইয়ের সুর">
+    <span class="music-ring" aria-hidden="true"></span>
+    <svg class="music-note" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18.5a3 3 0 1 1-2-2.83V5.5l11-2.5v12.5a3 3 0 1 1-2-2.83V7.6L9 9.2z"/></svg>
+    <span class="music-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+  </button>
+
+  <main id="journey">
+    <!-- দৃশ্য ২ : ভাসমান নিমন্ত্রণপত্র -->
+    <section id="invitation" class="scene scene-invitation" data-station="invite" aria-label="নিমন্ত্রণপত্র">
+      <div class="invite-ui">
+        <button id="open-card-btn" class="royal-btn royal-btn--small" type="button">
+          <span class="royal-btn-glow" aria-hidden="true"></span>
+          <span class="royal-btn-label">নিমন্ত্রণপত্র খুলুন</span>
+        </button>
+      </div>
+      <div class="name-reveal" id="name-reveal" aria-live="polite">
+        <p class="nr-title">শুভ বিবাহ</p>
+        <p class="nr-name gold-text" id="nr-groom">আকাশ ঘোষ</p>
+        <p class="nr-heart" aria-hidden="false">❤️</p>
+        <p class="nr-name gold-text" id="nr-bride">অনামিকা ঘোষ</p>
+      </div>
+      <a href="#hero" class="scroll-hint" id="scroll-hint">
+        <span>নিচে স্ক্রল করুন</span>
+        <i aria-hidden="true"></i>
+      </a>
+    </section>
+
+    <!-- দৃশ্য ৩ : মণ্ডপ -->
+    <section id="hero" class="scene scene-hero" data-station="hero" aria-label="শুভ বিবাহ">
+      <div class="hero-panel">
+        <p class="ganesh small" data-reveal>🦋🦋ওঁ প্রজাপতয়ে নম:🦋🦋</p>
+        <p class="hero-blessing" data-reveal>পরম করুণাময় ঈশ্বরের আশীর্বাদে</p>
+        <h2 class="hero-title" data-reveal>শুভ বিবাহ</h2>
+        <div class="hero-names" id="hero-names">
+          <span class="hero-name gold-text">আকাশ ঘোষ</span>
+          <span class="hero-and">ও</span>
+          <span class="hero-name gold-text">অনামিকা ঘোষ</span>
+        </div>
+        <span class="ornament-line" aria-hidden="true"></span>
+        <p class="hero-message" data-reveal>দুটি হৃদয়ের মিলনে, দুটি পরিবারের ভালোবাসার বন্ধনে, শুরু হতে চলেছে এক নতুন পথচলা।</p>
+      </div>
+    </section>
+
+    <!-- দৃশ্য ৪ : দুই পরিবার -->
+    <section id="family" class="scene scene-family" data-station="family" aria-label="দুই পরিবার">
+      <h2 class="section-title" data-reveal>শুভ পরিণয়ের শুভক্ষণে</h2>
+      <div class="family-grid">
+        <article class="family-card tilt" data-side="groom">
+          <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+          <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="family-lotus" aria-hidden="true"></div>
+          <p class="family-side">বরপক্ষ</p>
+          <h3 class="family-name gold-text">আকাশ ঘোষ</h3>
+          <span class="ornament-line small" aria-hidden="true"></span>
+          <p class="family-parent"><span>পিতা:</span> শ্রী মুকুল ঘোষ</p>
+          <p class="family-parent"><span>মাতা:</span> শ্রীমতী মমতা রাণী ঘোষ</p>
+        </article>
+        <div class="family-union" aria-hidden="true"><span>❤️</span></div>
+        <article class="family-card tilt" data-side="bride">
+          <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+          <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+          <div class="card-shine" aria-hidden="true"></div>
+          <div class="family-lotus" aria-hidden="true"></div>
+          <p class="family-side">কনেপক্ষ</p>
+          <h3 class="family-name gold-text">অনামিকা ঘোষ</h3>
+          <span class="ornament-line small" aria-hidden="true"></span>
+          <p class="family-parent"><span>পিতা:</span> শ্রী অজিত ঘোষ</p>
+          <p class="family-parent"><span>মাতা:</span> শ্রীমতী সঙ্গীতা রাণী ঘোষ</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- দৃশ্য ৫ : নতুন অধ্যায় -->
+    <section id="story" class="scene scene-story" data-station="story" aria-label="নতুন অধ্যায়">
+      <div class="story-panel">
+        <p class="story-kicker" data-reveal>ভালোবাসার নতুন অধ্যায়</p>
+        <h2 class="section-title" data-reveal>একটি নতুন সম্পর্কের সূচনা</h2>
+        <span class="ornament-line" aria-hidden="true"></span>
+        <p class="story-line" data-reveal>দুটি পরিবারের ভালোবাসা, আশীর্বাদ ও শুভকামনায় শুরু হতে চলেছে জীবনের এক নতুন অধ্যায়।</p>
+        <p class="story-line" data-reveal>নতুন স্বপ্ন, নতুন আশা আর ভালোবাসার বন্ধনে আবদ্ধ হতে চলেছে দুটি জীবন।</p>
+      </div>
+    </section>
+
+    <!-- দৃশ্য ৬ : অনুষ্ঠান সূচি -->
+    <section id="schedule" class="scene-schedule" aria-label="অনুষ্ঠান সূচি">
+      <header class="schedule-head">
+        <h2 class="section-title" data-reveal>অনুষ্ঠান সূচি</h2>
+        <span class="ornament-line" aria-hidden="true"></span>
+      </header>
+
+      <div class="timeline">
+        <div class="timeline-line" aria-hidden="true"><span class="timeline-fill" id="timeline-fill"></span></div>
+
+        <article class="event event--haldi scene" data-station="haldi" id="event-haldi">
+          <span class="timeline-node" aria-hidden="true"></span>
+          <div class="event-card tilt">
+            <span class="event-num" aria-hidden="true">০১</span>
+            <div class="event-icon icon-marigold" aria-hidden="true"></div>
+            <h3 class="event-title">গায়ে হলুদ</h3>
+            <span class="ornament-line small" aria-hidden="true"></span>
+            <p class="event-date">১২ ডিসেম্বর ২০২৬</p>
+            <p class="event-day">রোজ শনিবার</p>
+          </div>
+        </article>
+
+        <article class="event event--wedding scene" data-station="wedding" id="event-wedding">
+          <span class="timeline-node" aria-hidden="true"></span>
+          <div class="event-card event-card--grand tilt">
+            <span class="corner tl" aria-hidden="true"></span><span class="corner tr" aria-hidden="true"></span>
+            <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+            <div class="card-shine" aria-hidden="true"></div>
+            <span class="event-num" aria-hidden="true">০২</span>
+            <div class="event-icon icon-mandap" aria-hidden="true"></div>
+            <h3 class="event-title gold-text" id="wedding-title">শুভ বিবাহ</h3>
+            <div class="golden-frame" id="wedding-frame">
+              <p class="event-date">১৩ ডিসেম্বর ২০২৬</p>
+              <p class="event-day">রোজ রবিবার</p>
+              <span class="ornament-line small" aria-hidden="true"></span>
+              <p class="event-time">সন্ধ্যা ৬:১৫ ঘটিকা হতে রাত ১২:২৬ ঘটিকা পর্যন্ত</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="event event--bouvat scene" data-station="bouvat" id="event-bouvat">
+          <span class="timeline-node" aria-hidden="true"></span>
+          <div class="event-card tilt">
+            <span class="event-num" aria-hidden="true">০৩</span>
+            <div class="event-icon icon-feast" aria-hidden="true"></div>
+            <h3 class="event-title">প্রীতিভোজ (বৌভাত)</h3>
+            <span class="ornament-line small" aria-hidden="true"></span>
+            <p class="event-date">১৫ ডিসেম্বর ২০২৬</p>
+            <p class="event-day">রোজ মঙ্গলবার</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- দৃশ্য ৭ : আশীর্বাদ -->
+    <section id="finale" class="scene scene-finale" data-station="finale" aria-label="আশীর্বাদ">
+      <div class="finale-sticky">
+        <div class="finale-frame" id="finale-frame">
+          <span class="corner bl" aria-hidden="true"></span><span class="corner br" aria-hidden="true"></span>
+          <p class="finale-message" data-reveal>আপনাদের উপস্থিতি ও আশীর্বাদ আমাদের নতুন জীবনের পথচলাকে আরও সুন্দর ও আনন্দময় করে তুলবে।</p>
+          <span class="ornament-line" aria-hidden="true"></span>
+          <p class="finale-invite" data-reveal>আপনাদের সাদর আমন্ত্রণ</p>
+          <p class="finale-family" data-reveal>সপরিবারে আমন্ত্রিত</p>
+          <h2 class="finale-names gold-text" id="finale-names">আকাশ <span class="heart">❤️</span> অনামিকা</h2>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <noscript>
+    <div class="noscript">এই নিমন্ত্রণপত্রটি দেখতে অনুগ্রহ করে জাভাস্ক্রিপ্ট চালু করুন।</div>
+  </noscript>
+</body>
+</html>

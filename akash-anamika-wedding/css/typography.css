@@ -1,0 +1,111 @@
+/* ==========================================================
+   বাংলা টাইপোগ্রাফি — Noto Serif Bengali / Hind Siliguri / Noto Sans Bengali
+   ========================================================== */
+
+:root {
+  --font-display: "Noto Serif Bengali", "Noto Sans Bengali", serif;
+  --font-body: "Hind Siliguri", "Noto Sans Bengali", sans-serif;
+  --font-ui: "Noto Sans Bengali", "Hind Siliguri", sans-serif;
+
+  --fs-xs: clamp(0.85rem, 0.8rem + 0.25vw, 1rem);
+  --fs-sm: clamp(1rem, 0.94rem + 0.3vw, 1.15rem);
+  --fs-md: clamp(1.1rem, 1rem + 0.5vw, 1.4rem);
+  --fs-lg: clamp(1.4rem, 1.15rem + 1.2vw, 2.1rem);
+  --fs-xl: clamp(1.9rem, 1.4rem + 2.4vw, 3.4rem);
+  --fs-2xl: clamp(2.4rem, 1.6rem + 4vw, 5.2rem);
+  --fs-3xl: clamp(2.8rem, 1.8rem + 5.4vw, 6.6rem);
+}
+
+html {
+  font-family: var(--font-body);
+  font-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+}
+
+body {
+  font-size: var(--fs-md);
+  line-height: 1.85;              /* বাংলা মাত্রা ও যুক্তাক্ষরের জন্য উদার লাইন-হাইট */
+  font-weight: 400;
+}
+
+h1, h2, h3, .ganesh, .opening-sub, .section-title, .event-title,
+.nr-title, .nr-name, .hero-title, .hero-name, .family-name,
+.finale-names, .finale-invite, .finale-family, .family-side {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0;              /* বাংলায় letter-spacing যুক্তাক্ষর ভাঙতে পারে */
+  word-spacing: 0.06em;
+}
+
+.ganesh {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--champagne);
+}
+.ganesh.small { font-size: var(--fs-sm); }
+
+.opening-sub { font-size: var(--fs-lg); font-weight: 500; color: var(--ivory); }
+.opening-names { font-size: clamp(2.2rem, 1.2rem + 5vw, 6.2rem); font-weight: 800; line-height: 1.35; white-space: nowrap; }
+
+.section-title { font-size: var(--fs-xl); font-weight: 800; color: var(--ivory); }
+
+.hero-blessing { font-family: var(--font-display); font-size: var(--fs-md); font-weight: 500; color: var(--cream); }
+.hero-title { font-size: var(--fs-xl); color: var(--champagne); font-weight: 700; }
+.hero-name { font-family: var(--font-display); font-size: clamp(2.3rem, 1.3rem + 4.2vw, 5rem); font-weight: 900; line-height: 1.3; white-space: nowrap; }
+.hero-and { font-family: var(--font-display); font-size: var(--fs-lg); color: var(--champagne); font-weight: 600; }
+.hero-message { font-family: var(--font-body); font-size: var(--fs-md); font-weight: 500; line-height: 2; color: var(--ivory); }
+
+.nr-title { font-size: var(--fs-md); color: var(--maroon); font-weight: 700; }
+.nr-name { font-size: clamp(1.5rem, 0.8rem + 3.6vw, 3.3rem); font-weight: 900; line-height: 1.3; }
+.nr-heart { font-size: clamp(1.3rem, 1rem + 1.6vw, 2.2rem); line-height: 1.2; }
+
+.family-side { font-size: var(--fs-md); color: var(--champagne); font-weight: 600; }
+.family-name { font-size: var(--fs-xl); font-weight: 800; }
+.family-parent { font-family: var(--font-body); font-size: var(--fs-md); font-weight: 500; color: var(--ivory); }
+.family-parent span { color: var(--champagne); font-weight: 600; }
+
+.story-kicker { font-family: var(--font-display); font-size: var(--fs-sm); color: var(--champagne); font-weight: 600; }
+.story-line { font-family: var(--font-body); font-size: var(--fs-lg); font-weight: 500; line-height: 1.95; color: var(--ivory); }
+
+.event-num { font-family: var(--font-display); font-weight: 800; }
+.event-title { font-size: var(--fs-xl); font-weight: 800; }
+.event-date { font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 700; color: var(--ivory); }
+.event-day { font-family: var(--font-body); font-size: var(--fs-md); font-weight: 600; color: var(--champagne); }
+.event-time { font-family: var(--font-display); font-size: var(--fs-md); font-weight: 600; color: var(--ivory); line-height: 1.8; }
+
+.finale-message { font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 500; line-height: 1.95; color: var(--ivory); }
+.finale-invite { font-size: var(--fs-lg); color: var(--champagne); font-weight: 600; }
+.finale-family { font-size: var(--fs-xl); color: var(--ivory); font-weight: 800; }
+.finale-names { font-size: clamp(1.9rem, 1.1rem + 3.6vw, 4.2rem); font-weight: 900; line-height: 1.35; white-space: nowrap; }
+
+.royal-btn-label { font-family: var(--font-display); font-weight: 700; }
+.loader-text { font-family: var(--font-display); font-weight: 600; }
+.scroll-hint span, .scene-nav a::after { font-family: var(--font-ui); font-weight: 500; }
+
+/* সোনালি অক্ষর */
+.gold-text {
+  background: linear-gradient(100deg,
+    #9c7432 0%, #e8d5a3 18%, #fff3cf 30%, #c6a15b 45%,
+    #f7e3ad 62%, #b8873e 78%, #e8d5a3 100%);
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 10px rgba(198, 161, 91, 0.35)) drop-shadow(0 1px 0 rgba(53, 8, 20, 0.6));
+}
+.gold-text .heart {
+  -webkit-text-fill-color: initial;
+  color: initial;
+  display: inline-block;
+  font-size: 0.7em;
+  vertical-align: 0.12em;
+  filter: drop-shadow(0 0 12px rgba(255, 80, 110, 0.55));
+}
+
+/* শব্দভিত্তিক রিভিল — অক্ষর ভাঙা হয় না, তাই যুক্তাক্ষর অক্ষত থাকে */
+.word { display: inline-block; white-space: nowrap; will-change: transform, opacity, filter; }
