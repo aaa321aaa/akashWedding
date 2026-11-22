@@ -262,9 +262,11 @@ export class Experience {
     });
 
     if (name === 'hero') {
-      const m = this.r.courtyard.mandap;
-      const proxy = { v: m.glow };
-      g.to(proxy, { v: 1, duration: 2.5, onUpdate: () => m.setGlow(proxy.v) });
+      const m = this.r.courtyard && this.r.courtyard.mandap;
+      if (m) {
+        const proxy = { v: m.glow };
+        g.to(proxy, { v: 1, duration: 2.5, onUpdate: () => m.setGlow(proxy.v) });
+      }
       g.delayedCall(0.8, () => butterflies.circleElement(document.getElementById('hero-names'), { count: 6, duration: 6.5, depth: 7 }));
     }
     if (name === 'family') {
@@ -288,10 +290,12 @@ export class Experience {
   weddingMoment(el) {
     const g = gsap();
     const { butterflies, burst, world } = this.r;
-    const m = this.r.wedding.mandap;
-    const proxy = { v: m.glow };
+    const m = this.r.wedding && this.r.wedding.mandap;
     // সোনালি আলোয় মণ্ডপ আলোকিত
-    g.to(proxy, { v: 1.4, duration: 3, ease: 'power2.out', onUpdate: () => m.setGlow(proxy.v) });
+    if (m) {
+      const proxy = { v: m.glow };
+      g.to(proxy, { v: 1.4, duration: 3, ease: 'power2.out', onUpdate: () => m.setGlow(proxy.v) });
+    }
     g.to(world.rig, { keyBoost: 1.7, duration: 2.5 });
     // পাপড়ি বর্ষণ
     burst.rain(new THREE.Vector3(LAYOUT.wedding.x, 9, LAYOUT.wedding.z + 6), quality.reduced ? 80 : quality.burst, { width: 18, height: 8, life: 8 });

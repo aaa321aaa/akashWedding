@@ -67,6 +67,8 @@ h1, h2, h3, .ganesh, .opening-sub, .section-title, .event-title,
 .family-name { font-size: var(--fs-xl); font-weight: 800; }
 .family-parent { font-family: var(--font-body); font-size: var(--fs-md); font-weight: 500; color: var(--ivory); }
 .family-parent span { color: var(--champagne); font-weight: 600; }
+.family-address, .event-venue { font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 500; color: var(--cream); line-height: 1.7; }
+.family-address span, .event-venue span { color: var(--champagne); font-weight: 600; }
 
 .story-kicker { font-family: var(--font-display); font-size: var(--fs-sm); color: var(--champagne); font-weight: 600; }
 .story-line { font-family: var(--font-body); font-size: var(--fs-lg); font-weight: 500; line-height: 1.95; color: var(--ivory); }

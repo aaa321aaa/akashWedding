@@ -29,17 +29,17 @@ async function waitForGsap() {
   window.gsap.registerPlugin(window.ScrollTrigger);
 }
 
+// শুধু ক্যানভাসে আঁকা নিমন্ত্রণপত্রের ফন্টের জন্য অপেক্ষা; বাকিগুলো পটভূমিতে আসবে
 async function loadFonts() {
   if (!document.fonts) return;
-  const list = [
-    '900 64px "Noto Serif Bengali"', '800 64px "Noto Serif Bengali"', '700 64px "Noto Serif Bengali"',
-    '500 24px "Hind Siliguri"', '600 24px "Hind Siliguri"', '500 24px "Noto Sans Bengali"'
-  ];
   await Promise.race([
-    Promise.all(list.map(f => document.fonts.load(f, 'আকাশ অনামিকা শুভ বিবাহ ঘোষ'))),
-    wait(5000)
+    document.fonts.load('800 64px "Noto Serif Bengali"', 'আকাশ অনামিকা শুভ বিবাহ ঘোষ'),
+    wait(2500)
   ]).catch(() => {});
 }
+
+// ব্রাউজার ফাঁকা থাকলে কাজ চালানো (ফ্রেম আটকে না দিয়ে)
+const idle = () => new Promise(r => (window.requestIdleCallback ? requestIdleCallback(() => r(), { timeout: 400 }) : setTimeout(r, 30)));
 
 function hideLoader() {
   const l = $('#loader');
@@ -81,8 +81,11 @@ async function boot() {
   document.getElementById('enter-btn').addEventListener('click', () => music.start(), { once: true });
   setProgress(5);
 
-  try { await waitForGsap(); } catch (e) { console.error(e); }
-  await loadFonts();
+  // GSAP ও ফন্ট একসাথে লোড
+  await Promise.all([
+    waitForGsap().catch(e => console.error(e)),
+    loadFonts()
+  ]);
   setProgress(18);
 
   if (!webglAvailable()) return fallback();
@@ -95,7 +98,9 @@ async function boot() {
     return fallback();
   }
 
+  // প্রথম ধাপ: শুধু প্রবেশদ্বার ও নিমন্ত্রণপত্র — দ্রুত দেখানোর জন্য
   const steps = [];
+  const later = [];
   const refs = { world };
   steps.push(() => createGround(world));
   const zone = (root, key, r = 100) => { world.addZone(root, LAYOUT[key], r); return root; };
@@ -105,13 +110,14 @@ async function boot() {
     world.addZone(refs.palace.root, new THREE.Vector3(0, 0, -22), 125);
   });
   steps.push(() => { refs.invitation = createInvitation(world); zone(refs.invitation.root, 'invite', 90); });
-  steps.push(() => { refs.courtyard = createCourtyard(world); zone(optimizeStatic(refs.courtyard.root), 'hero'); });
-  steps.push(() => { zone(optimizeStatic(createFamilyScene(world).root), 'family'); });
-  steps.push(() => { zone(optimizeStatic(createGarden(world).root), 'story'); });
-  steps.push(() => { zone(optimizeStatic(createHaldi(world).root), 'haldi'); });
-  steps.push(() => { refs.wedding = createWeddingScene(world); zone(optimizeStatic(refs.wedding.root), 'wedding'); });
-  steps.push(() => { zone(optimizeStatic(createReception(world).root), 'bouvat'); });
-  steps.push(() => { zone(optimizeStatic(createFinale(world).root), 'finale', 120); });
+  // বাকি দৃশ্যগুলো লোডার সরে যাওয়ার পর পটভূমিতে তৈরি হবে
+  later.push(() => { refs.courtyard = createCourtyard(world); return zone(optimizeStatic(refs.courtyard.root), 'hero'); });
+  later.push(() => zone(optimizeStatic(createFamilyScene(world).root), 'family'));
+  later.push(() => zone(optimizeStatic(createGarden(world).root), 'story'));
+  later.push(() => zone(optimizeStatic(createHaldi(world).root), 'haldi'));
+  later.push(() => { refs.wedding = createWeddingScene(world); return zone(optimizeStatic(refs.wedding.root), 'wedding'); });
+  later.push(() => zone(optimizeStatic(createReception(world).root), 'bouvat'));
+  later.push(() => zone(optimizeStatic(createFinale(world).root), 'finale', 120));
   steps.push(() => {
     refs.petals = new AmbientPetals(world);
     refs.burst = new PetalBurst(world);
@@ -143,12 +149,25 @@ async function boot() {
   world.start();
   await nextFrame(); await nextFrame();
   setProgress(100);
-  await wait(350);
+  await wait(150);
 
   initCardTilt();
   initWorldInteractions({ world, sparkles: refs.sparkles, butterflies: refs.butterflies });
   hideLoader();
   experience.playIntro();
+
+  // পটভূমিতে বাকি দৃশ্য তৈরি ও শেডার কম্পাইল (অতিথি দরজা খোলার আগেই শেষ হয়ে যায়)
+  await wait(600);
+  for (const build of later) {
+    await idle();
+    const root = build();
+    if (root && world.renderer.compileAsync) {
+      const vis = root.visible;
+      root.visible = true;
+      try { await world.renderer.compileAsync(root, world.camera, world.scene); } catch (e) { /* ঐচ্ছিক */ }
+      root.visible = vis;
+    }
+  }
 }
 
 boot().catch(err => {

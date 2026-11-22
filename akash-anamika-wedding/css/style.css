@@ -311,6 +311,8 @@ html.is-locked #journey { visibility: hidden; }
 }
 .family-name { margin: 0.2rem 0 0.2rem; }
 .family-parent { margin-top: 0.25rem; }
+.family-address { margin-top: 0.7rem; padding-top: 0.6rem; border-top: 1px solid rgba(198, 161, 91, 0.3); }
+.event-venue { margin: 0.6rem auto 0; max-width: 30ch; }
 .family-union span {
   display: grid; place-items: center; width: 64px; height: 64px; border-radius: 50%;
   font-size: 1.6rem;
